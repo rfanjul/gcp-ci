@@ -1,0 +1,75 @@
+on: [push]
+
+jobs:
+  build:
+    name: "Build & Test"
+    runs-on: ubuntu-16.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11.0.2'
+          architecture: x64
+
+      - run: mvn clean install -DskipTests=true
+
+      - run: mvn test
+
+#      - uses: actions/upload-artifact@master
+#        with:
+#          name: report
+#          path: ./core/target/site/jacoco/jacoco.xml
+
+#  report:
+#    name: "Upload reports"
+#    runs-on: ubuntu-16.04
+#    timeout-minutes: 10
+#    needs: build
+#    steps:
+#      - uses: actions/download-artifact@master
+#        with:
+#          name: report
+#          path: ./core/target/site/jacoco/jacoco.xml
+#
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v1.0.2
+#        with:
+#          token: ${{secrets.CODECOV_TOKEN}}
+#          file: ./core/target/site/jacoco/jacoco.xml
+
+#  deploy:
+#    name: "Deploy version to github repository"
+#    runs-on: ubuntu-16.04
+#    timeout-minutes: 10
+#    needs: build
+#    steps:
+#      - uses: actions/checkout@master
+#
+#      - run: mvn clean install -s settings.xml
+#
+#      - run: mvn deploy -s settings.xml
+
+#  deploy:
+#    name: "Deployment to K8s"
+#    runs-on: ubuntu-16.04
+#    timeout-minutes: 10
+#    needs: report
+#    steps:
+#      - name: "GCP Authenticate"
+#        uses: actions/gcloud/auth@master
+#        env:
+#          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+
+
+
+#
+#  - uses: actions/upload-artifact@master
+#    with:
+#      name: my-artifact
+#      path: path/to/artifact
+#  - uses: actions/download-artifact@master
+#    with:
+#      name: my-artifact
+#      path: path/to/artifact
