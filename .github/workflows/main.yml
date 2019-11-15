@@ -17,59 +17,35 @@ jobs:
 
       - run: mvn test
 
-#      - uses: actions/upload-artifact@master
-#        with:
-#          name: report
-#          path: ./core/target/site/jacoco/jacoco.xml
+  deploy:
+    name: "Deployment to K8s"
+    runs-on: ubuntu-16.04
+    timeout-minutes: 10
+    needs: build
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: project
+          path: ./
 
-#  report:
-#    name: "Upload reports"
-#    runs-on: ubuntu-16.04
-#    timeout-minutes: 10
-#    needs: build
-#    steps:
-#      - uses: actions/download-artifact@master
-#        with:
-#          name: report
-#          path: ./core/target/site/jacoco/jacoco.xml
-#
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1.0.2
-#        with:
-#          token: ${{secrets.CODECOV_TOKEN}}
-#          file: ./core/target/site/jacoco/jacoco.xml
-
-#  deploy:
-#    name: "Deploy version to github repository"
-#    runs-on: ubuntu-16.04
-#    timeout-minutes: 10
-#    needs: build
-#    steps:
-#      - uses: actions/checkout@master
-#
-#      - run: mvn clean install -s settings.xml
-#
-#      - run: mvn deploy -s settings.xml
-
-#  deploy:
-#    name: "Deployment to K8s"
-#    runs-on: ubuntu-16.04
-#    timeout-minutes: 10
-#    needs: report
-#    steps:
 #      - name: "GCP Authenticate"
 #        uses: actions/gcloud/auth@master
 #        env:
 #          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+#        with:
+#          run: "container clusters list"
 
+      - name: "Build the image"
+        uses: actions/docker/cli@master
+        with:
+          run: build -t eu.gcr.io/gara-quant/bollinger-bands .
 
+      - name: "Tagging ${GITHUB_SHA}"
+        uses: actions/docker/cli@master
+        with:
+          run: tag eu.gcr.io/gara-quant/bollinger-bands:latest eu.gcr.io/gara-quant/bollinger-bands:${GITHUB_SHA}
 
-#
-#  - uses: actions/upload-artifact@master
-#    with:
-#      name: my-artifact
-#      path: path/to/artifact
-#  - uses: actions/download-artifact@master
-#    with:
-#      name: my-artifact
-#      path: path/to/artifact
+#      - name: "Pushing...."
+#        uses: actions/docker/cli@master
+#        with:
+#          run: push eu.gcr.io/gara-quant/bollinger-bands:${GITHUB_SHA}
