@@ -39,13 +39,13 @@ jobs:
         #uses: actions/docker/cli@master
         #with:
         #  run: build -t eu.gcr.io/gara-quant/bollinger-bands .
-        run: build -t eu.gcr.io/your-project/gpc-ci .
+        run: docker build -t eu.gcr.io/your-project/gpc-ci .
 
       - name: "Tagging ${GITHUB_SHA}"
 #        uses: actions/docker/cli@master
 #        with:
 #          run: tag eu.gcr.io/gara-quant/bollinger-bands:latest eu.gcr.io/gara-quant/bollinger-bands:${GITHUB_SHA}
-        run: tag eu.gcr.io/your-project/gpc-ci:latest eu.gcr.io/your-project/gpc-ci:${GITHUB_SHA}
+        run: docker tag eu.gcr.io/your-project/gpc-ci:latest eu.gcr.io/your-project/gpc-ci:${GITHUB_SHA}
 
 #      - name: "Pushing...."
 #        uses: actions/docker/cli@master
