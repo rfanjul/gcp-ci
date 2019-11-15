@@ -23,10 +23,10 @@ jobs:
     timeout-minutes: 10
     needs: build
     steps:
-      - uses: actions/download-artifact@master
-        with:
-          name: project
-          path: ./
+      #- uses: actions/download-artifact@master
+      #  with:
+      #    name: project
+      #    path: ./
 
 #      - name: "GCP Authenticate"
 #        uses: actions/gcloud/auth@master
