@@ -1,5 +1,5 @@
 #FROM openjdk:11-jre-slim
-FROM openjdk:1.8-alpine
+FROM openjdk:8-jre-alpine
 VOLUME /tmp
 ARG DEPENDENCY=target/
 COPY ${DEPENDENCY}/lib   /app/dependency
