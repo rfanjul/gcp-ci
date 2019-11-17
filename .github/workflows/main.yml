@@ -13,8 +13,8 @@ jobs:
           java-version: '11.0.2'
           architecture: x64
 
-      # - run: mvn clean install -DskipTests=true
-      - run: mvn clean install
+      - run: mvn clean install -DskipTests=true
+      - run: mvn test
 
       - name: Godacov Report
         uses: brpaz/godacov-action@v1.0.3
