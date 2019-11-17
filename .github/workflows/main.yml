@@ -13,10 +13,11 @@ jobs:
           java-version: '11.0.2'
           architecture: x64
 
-      - run: mvn clean install -DskipTests=true
+      # - run: mvn clean install -DskipTests=true
+      - run: mvn clean install
 
       - name: Codacy
-        uses: brpaz/godacov-action@v1
+        uses: actions/brpaz/godacov-action@v1
         with:
           reportPath: 'target/site/jacoco'
           codacyToken: ${{ secrets.CODACY_TOKEN }}
