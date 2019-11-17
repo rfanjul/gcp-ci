@@ -15,6 +15,8 @@ jobs:
 
       - run: mvn clean install test
 
+      - run: ls -la target/*
+
       - name: Godacov Report
         uses: brpaz/godacov-action@v1.0.3
         with:
