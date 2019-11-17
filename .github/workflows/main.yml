@@ -15,14 +15,20 @@ jobs:
 
       - run: mvn clean install -DskipTests=true
 
-      - run: mvn test
+      #- run: mvn test
 
-  deploy:
-    name: "Deployment to K8s"
-    runs-on: ubuntu-16.04
-    timeout-minutes: 10
-    needs: build
-    steps:
+      - uses: brpaz/godacov-action@v1
+        with:
+          reportPath: 'target/site/jacoco'
+          codacyToken: ${{ secrets.CODACY_TOKEN }}
+          commitId: ${{ github.sha }}
+
+#  deploy:
+#    name: "Deployment to K8s"
+#    runs-on: ubuntu-16.04
+#    timeout-minutes: 10
+#    needs: build
+#    steps:
       #- uses: actions/download-artifact@master
       #  with:
       #    name: project
@@ -34,18 +40,16 @@ jobs:
 #          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
 #        with:
 #          run: "container clusters list"
-
+#
       - name: "Build the image"
         #uses: actions/docker/cli@master
         #with:
         #  run: build -t eu.gcr.io/gara-quant/bollinger-bands .
-        run: docker build -t eu.gcr.io/your-project/gpc-ci .
 
-      - name: "Tagging ${GITHUB_SHA}"
+#      - name: "Tagging ${GITHUB_SHA}"
 #        uses: actions/docker/cli@master
 #        with:
 #          run: tag eu.gcr.io/gara-quant/bollinger-bands:latest eu.gcr.io/gara-quant/bollinger-bands:${GITHUB_SHA}
-        run: docker tag eu.gcr.io/your-project/gpc-ci:latest eu.gcr.io/your-project/gpc-ci:${GITHUB_SHA}
 
 #      - name: "Pushing...."
 #        uses: actions/docker/cli@master
