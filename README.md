@@ -1,6 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2dc3d1c413be4ed88337ec2e8a91b752)](https://www.codacy.com/manual/rfanjul/gcp-ci?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rfanjul/gcp-ci&amp;utm_campaign=Badge_Grade)
-
-![](https://github.com/actions/main/workflows/Greet%20Everyone/badge.svg) Build
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b8d6ada3d3ee44ca99a61aa52eed4e68)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rfanjul/gcp-ci&amp;utm_campaign=Badge_Grade)
 
 # GPC CI
 
