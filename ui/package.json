@@ -3,20 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "24.0.23",
-    "@types/node": "12.12.8",
-    "@types/react-dom": "16.9.4",
-    "codacy-coverage": "^3.4.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0",
-    "typescript": "3.7.2"
+    "react-scripts": "3.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test-with-coverage": "set CI=true && react-scripts test --watchAll=false --coverage --token=$CODACY_PROJECT_TOKEN | codacy-coverage && rm -rf ./coverage",
+    "test-with-coverage": "react-scripts test --watchAll=false --coverage",
+    "report": "export CODACY_PROJECT_TOKEN=8c8c1fa3372c4cafa26cc1461324307f; cat ./coverage/lcov.info | ./node_modules/codacy-coverage/bin/codacy-coverage.js  && rm -rf ./coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,12 +45,16 @@
       }
     },
     "coverageReporters": [
-      "text",
       "lcov"
     ]
   },
   "devDependencies": {
     "@babel/runtime": "^7.7.2",
-    "@types/react": "^16.9.11"
+    "@types/react": "^16.9.11",
+    "@types/jest": "24.0.23",
+    "@types/node": "12.12.8",
+    "@types/react-dom": "16.9.4",
+    "codacy-coverage": "^3.4.0",
+    "typescript": "3.7.2"
   }
 }
