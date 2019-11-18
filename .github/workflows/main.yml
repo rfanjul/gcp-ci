@@ -27,8 +27,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10'
-      - run: cd ui
-      - run: npm install
-      - run: npm run test-with-coverage
+      - run: ls -la && cd ui && ls -la && npm install && npm run test-with-coverage
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
