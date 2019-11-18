@@ -21,6 +21,6 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
 
       # UI testing
-      - run: cd ui && mpn install & npm test-with-coverage
+      - run: cd ui && npm install & npm test-with-coverage
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
