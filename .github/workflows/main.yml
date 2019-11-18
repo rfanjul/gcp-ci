@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   build:
-    name: "Build & Test"
+    name: "Build & Test Backend"
     runs-on: ubuntu-16.04
     timeout-minutes: 10
     steps:
@@ -12,7 +12,6 @@ jobs:
         with:
           java-version: '1.8'
           architecture: x64
-
       - run: mvn clean install
 
       - run: curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux"))) | .[0].browser_download_url')"
@@ -21,6 +20,7 @@ jobs:
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
 
-
-      #- name: Build the Docker image
-      #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # UI testing
+      - run: cd ui && mpn install & npm test-with-coverage
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
