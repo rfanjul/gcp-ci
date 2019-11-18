@@ -7,6 +7,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@master
+
+      # build and test backend
       - name: Setup java
         uses: actions/setup-java@v1
         with:
@@ -14,6 +16,7 @@ jobs:
           architecture: x64
       - run: mvn clean install
 
+      # reporting
       - run: curl -Ls -o codacy-coverage-reporter "$(curl -Ls https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | contains("codacy-coverage-reporter-linux"))) | .[0].browser_download_url')"
       - run: chmod +x codacy-coverage-reporter
       - run: ./codacy-coverage-reporter report -l Java -r ./target/site/jacoco/jacoco.xml
@@ -24,6 +27,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10'
-      - run: cd ui && npm install & npm test-with-coverage
+      - run: cd ui
+      - run: npm install
+      - run: npm test-with-coverage
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_TOKEN }}
